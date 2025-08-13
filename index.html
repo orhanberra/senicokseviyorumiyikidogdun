@@ -438,7 +438,6 @@
     </nav>
 
     <!-- Hero Section -->
-    <!-- Hero Section -->
 <header id="home">
     <div class="hero-bg" style="background-image: url('images/1.jpeg');"></div>
     <div class="hero-content">
@@ -446,10 +445,14 @@
         <p>Seninle geçen her an, zamanın ötesinde bir değer taşıyor...</p>
         <a href="#gallery" class="btn">Unutamadığım Anlarımız...</a>
 
-        <!-- Ses başlat butonu -->
+        <!-- Audio -->
+        <audio id="bgMusic" src="muzik.mp3" preload="auto"></audio>
+
+        <!-- Ses butonu -->
         <div id="musicPrompt" style="margin-top:15px;text-align:center;cursor:pointer;">
             <i class="fas fa-volume-up" style="font-size:1.5rem;color:white;"></i>
         </div>
+
     </div>
 </header>
 
@@ -478,33 +481,29 @@
         <p>© 2025 Sonsuz Aşkımız</p>
         <p><strong>Development by <a href="https://emirix7.github.io" id="devLink">emopect</a></strong></p>
     </footer>
-
-    <!-- Arka plan müziği -->
-    <audio autoplay loop id="bgMusic">
-        <source src="muzik.mp3" type="audio/mpeg">
-        Tarayıcınız audio elementini desteklemiyor.
-    </audio>
     
 
     <script>
 function initMusic() {
     const music = document.getElementById('bgMusic');
     music.volume = 0.3;
-    music.muted = true; // sessiz modda başlat
+
+    const prompt = document.getElementById('musicPrompt');
 
     function startMusic() {
         music.play().then(() => {
-            music.muted = false; // sesi aç
-            console.log('Müzik başlatıldı ve ses açıldı');
-            document.getElementById('musicPrompt').style.display = 'none'; // butonu gizle
-        }).catch(e => console.log('Müzik çalınamadı:', e));
+            console.log('Müzik başlatıldı');
+            prompt.style.display = 'none'; // ikon gizle
+        }).catch(e => {
+            console.log('Müzik çalınamadı:', e);
+        });
         
         // Eventleri kaldır
-        document.getElementById('musicPrompt').removeEventListener('click', startMusic);
-        document.getElementById('musicPrompt').removeEventListener('touchstart', startMusic);
+        prompt.removeEventListener('click', startMusic);
+        prompt.removeEventListener('touchstart', startMusic);
     }
 
-    const prompt = document.getElementById('musicPrompt');
+    // Hem tıklama hem dokunma olaylarını bağla
     prompt.addEventListener('click', startMusic);
     prompt.addEventListener('touchstart', startMusic);
 }

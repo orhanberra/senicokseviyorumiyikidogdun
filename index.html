@@ -438,14 +438,21 @@
     </nav>
 
     <!-- Hero Section -->
-    <header id="home">
-        <div class="hero-bg" style="background-image: url('images/1.jpeg');"></div>
-        <div class="hero-content">
-            <h1>Kalbinin Ritmi</h1>
-            <p>Seninle geçen her an, zamanın ötesinde bir değer taşıyor...</p>
-            <a href="#gallery" class="btn">Unutamadığım Anlarımız...</a>
+    <!-- Hero Section -->
+<header id="home">
+    <div class="hero-bg" style="background-image: url('images/1.jpeg');"></div>
+    <div class="hero-content">
+        <h1>Kalbinin Ritmi</h1>
+        <p>Seninle geçen her an, zamanın ötesinde bir değer taşıyor...</p>
+        <a href="#gallery" class="btn">Unutamadığım Anlarımız...</a>
+
+        <!-- Ses başlat butonu -->
+        <div id="musicPrompt" style="margin-top:15px;text-align:center;cursor:pointer;">
+            <i class="fas fa-volume-up" style="font-size:1.5rem;color:white;"></i>
         </div>
-    </header>
+    </div>
+</header>
+
 
     <!-- Gallery Section -->
     <section class="gallery-section" id="gallery">
@@ -477,9 +484,9 @@
         <source src="muzik.mp3" type="audio/mpeg">
         Tarayıcınız audio elementini desteklemiyor.
     </audio>
+    
 
     <script>
-        
 function initMusic() {
     const music = document.getElementById('bgMusic');
     music.volume = 0.3;
@@ -487,29 +494,23 @@ function initMusic() {
 
     function startMusic() {
         music.play().then(() => {
-            music.muted = false; // kullanıcı etkileşimi ile sesi aç
+            music.muted = false; // sesi aç
             console.log('Müzik başlatıldı ve ses açıldı');
-        }).catch(e => {
-            console.log('Müzik çalınamadı:', e);
-        });
-
-        // Eventleri kaldır, tekrar tetiklenmesin
-        document.body.removeEventListener('click', startMusic);
-        document.body.removeEventListener('touchstart', startMusic);
+            document.getElementById('musicPrompt').style.display = 'none'; // butonu gizle
+        }).catch(e => console.log('Müzik çalınamadı:', e));
+        
+        // Eventleri kaldır
+        document.getElementById('musicPrompt').removeEventListener('click', startMusic);
+        document.getElementById('musicPrompt').removeEventListener('touchstart', startMusic);
     }
 
-    // Hem click hem touchstart ile başlat
-    document.body.addEventListener('click', startMusic);
-    document.body.addEventListener('touchstart', startMusic);
-
-    // Sessiz autoplay denemesi
-    setTimeout(() => {
-        music.play().catch(() => {
-            console.log('Sessiz autoplay engellendi');
-        });
-    }, 2000);
+    const prompt = document.getElementById('musicPrompt');
+    prompt.addEventListener('click', startMusic);
+    prompt.addEventListener('touchstart', startMusic);
 }
+
 document.addEventListener('DOMContentLoaded', initMusic);
+
 
 
 
